@@ -20,6 +20,8 @@
                                 {{ $data['firstDetail']->nama_lengkap }}</li>
                             <li class="list-group-item"><strong>Nomor KTP (NIK):</strong> {{ $data['firstDetail']->nik }}
                             </li>
+                            <li class="list-group-item"><strong>Nomor KK:</strong> {{ $data['firstDetail']->kk }}
+                            </li>
                             <li class="list-group-item"><strong>Agama:</strong> {{ $data['firstDetail']->agama }}</li>
                             <li class="list-group-item"><strong>Status Kawin:</strong>
                                 {{ $data['firstDetail']->kawin_status == 'kw' ? 'Kawin' : 'Belum Kawin' }}</li>
@@ -49,6 +51,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>KK</th>
                                     <th>Kode</th>
                                     <th>Nama Program</th>
                                     <th>LAZ</th>
@@ -61,6 +64,7 @@
                             <tbody>
                                 @foreach($data['detailPenerima'] as $detail)
                                     <tr>
+                                        <td>{{ $detail->kk }}</td>
                                         <td>{{ $detail->program_kode }}</td>
                                         <td>{{ $detail->program_nama }}</td>
                                         <td>{{ $detail->laz_nama }}</td>
