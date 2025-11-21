@@ -1094,9 +1094,18 @@
                                 name: 'nik_hashed',
                                 render: function (data, type, row) {
                                     // Create the URL using the 'nik_hashed'
-                                    var url = '{{ route("dashboard") }}/' + data ;  // Example URL, adjust as needed
-                                    return '<a href="' + url + '" target="_blank">Profile</a>';  // Link to profile using hashed nik
+                                    var url = '{{ route("detail") }}';  // Replace :id with the actual hashed data
+
+                                    // Return a form with a hidden input for 'nik' and submit button
+                                    return `
+                        <form action="${url}" method="POST" style="display:inline;">
+                            @csrf  <!-- Laravel CSRF token -->
+                            <input type="hidden" name="id" value="${data}">
+                            <button type="submit" class="btn btn-sm btn-warning">Detail</button>
+                        </form>
+                    `;
                                 }
+
                             }
                         ]
                     });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailPenerima;
 use Illuminate\Http\Request;
 
 class DetailPenerimaController extends Controller
@@ -9,9 +10,24 @@ class DetailPenerimaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     //
+    //     return view('detail_penerima');
+
+    // }
+    public function index(Request $request)
     {
-        //
+        $id = $request->input('id');
+        $detailPenerima = DetailPenerima::getDetailMustahik($id);
+        $firstDetail = $detailPenerima->first();
+        
+        $data = [
+            'detailPenerima' => $detailPenerima,
+            'firstDetail' => $firstDetail,
+        ];
+        // dump($id);
+        return view('detail_penerima', compact('data'));
     }
 
     /**
