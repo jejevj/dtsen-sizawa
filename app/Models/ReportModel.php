@@ -25,22 +25,23 @@ class ReportModel extends Model
         }
     }
 
-    public static function getDataByGender()
-    {
-        try {
-            return self::selectRaw('
-                SUM(jenis_kelamin = "m") AS male_count,
-                SUM(jenis_kelamin = "f") AS female_count,
-                COUNT(*) AS total
-            ')->first();
-        } catch (\Exception $e) {
-            Log::error('Error fetching gender data: '.$e->getMessage());
+public static function getDataByGender()
+{
+    try {
+        return self::selectRaw('
+            COUNT(DISTINCT CASE WHEN jenis_kelamin = "m" THEN nik END) AS male_count,
+            COUNT(DISTINCT CASE WHEN jenis_kelamin = "f" THEN nik END) AS female_count,
+            COUNT(DISTINCT nik) AS total
+        ')->first();
+    } catch (\Exception $e) {
+        Log::error('Error fetching gender data: '.$e->getMessage());
 
-            return [
-                'error' => 'Data gender gagal diproses. Hubungi pengembang.',
-            ];
-        }
+        return [
+            'error' => 'Data gender gagal diproses. Hubungi pengembang.',
+        ];
     }
+}
+
 
     public static function getPenyaluranByGender()
     {
@@ -126,16 +127,16 @@ class ReportModel extends Model
     {
         try {
             return DB::table('t_mustahik')
-            ->select(
-                DB::raw('MD5(nik) as nik_hashed'),  // Apply MD5 to the 'nik' column
-                'nik as nik',
-                'nama_lengkap as nama_pm',
-                'jenis_kelamin',
-                'alamat_domisili as domisili',
-                'ktp_alamat as alamat_ktp',
-                'rupiah as nominal'
-            )
-            ->get();
+                ->select(
+                    DB::raw('MD5(nik) as nik_hashed'),  // Apply MD5 to the 'nik' column
+                    'nik as nik',
+                    'nama_lengkap as nama_pm',
+                    'jenis_kelamin',
+                    'alamat_domisili as domisili',
+                    'ktp_alamat as alamat_ktp',
+                    'rupiah as nominal'
+                )
+                ->get();
 
         } catch (\Exception $e) {
             \Log::error('Error fetching tabulate data: '.$e->getMessage());
