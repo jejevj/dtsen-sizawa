@@ -15,7 +15,7 @@ Route::prefix('dtsen')->group(function () {
     Route::post('/detail', [DetailPenerimaController::class, 'index'])->name('detail');
     Route::get('/detail2', [DetailPenerimaController::class, 'index2'])->name('detail2');
 
-    Route::get('/report/tabulate-data', [ReportController::class, 'getTabulateData'])
+    Route::get('/tabulate-data', [ReportController::class, 'getTabulateData'])
         ->name('report.tabulate');
 
     Route::get('/proxy', function () {
