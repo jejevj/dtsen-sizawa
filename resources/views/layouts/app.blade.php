@@ -12,7 +12,8 @@
     <meta property="og:type" content="article" />
     <meta property="og:title" content="" />
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; connect-src 'self' https://maps.googleapis.com; ">
+        content="default-src 'self'; connect-src 'self' http://simzat.kemenag.go.id; ...other directives...">
+
     {{--
     <meta property="og:url" content="https://keenthemes.com/metronic" /> --}}
     {{--
