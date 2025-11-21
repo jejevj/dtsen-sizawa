@@ -11,6 +11,8 @@
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="" />
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; connect-src 'self' https://maps.googleapis.com; ">
     {{--
     <meta property="og:url" content="https://keenthemes.com/metronic" /> --}}
     {{--
