@@ -21,11 +21,27 @@ class DetailPenerimaController extends Controller
         $id = $request->input('id');
         $detailPenerima = DetailPenerima::getDetailMustahik($id);
         $firstDetail = $detailPenerima->first();
-        
+
         $data = [
             'detailPenerima' => $detailPenerima,
             'firstDetail' => $firstDetail,
         ];
+
+        // dump($id);
+        return view('detail_penerima', compact('data'));
+    }
+
+    public function index2(Request $request)
+    {
+        $id = $request->input('id');
+        $detailPenerima = DetailPenerima::getDetailMustahik($id);
+        $firstDetail = $detailPenerima->first();
+
+        $data = [
+            'detailPenerima' => $detailPenerima,
+            'firstDetail' => $firstDetail,
+        ];
+
         // dump($id);
         return view('detail_penerima', compact('data'));
     }

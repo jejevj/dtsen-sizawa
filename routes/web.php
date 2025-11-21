@@ -13,6 +13,7 @@ Route::prefix('dtsen')->group(function () {
     Route::get('/report', [ReportController::class, 'index'])->name('report');
     // Detail Penerima Manfaat route
     Route::post('/detail', [DetailPenerimaController::class, 'index'])->name('detail');
+    Route::get('/detail2', [DetailPenerimaController::class, 'index2'])->name('detail2');
 
     Route::get('/report/tabulate-data', [ReportController::class, 'getTabulateData'])
         ->name('report.tabulate');

@@ -1095,6 +1095,7 @@
                                 render: function (data, type, row) {
                                     // Create the URL using the 'nik_hashed'
                                     var url = '{{ route("detail") }}';  // Replace :id with the actual hashed data
+                                    var url2 = '{{ route("detail2") }}?id='+data;  // Replace :id with the actual hashed data
 
                                     // Return a form with a hidden input for 'nik' and submit button
                                     return `
@@ -1103,6 +1104,7 @@
                             <input type="hidden" name="id" value="${data}">
                             <button type="submit" class="btn btn-sm btn-warning">Detail</button>
                         </form>
+                        <a href="${url2}">Detail 2</a>
                     `;
                                 }
 
