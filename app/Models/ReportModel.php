@@ -14,7 +14,7 @@ class ReportModel extends Model
     {
         try {
 
-            return self::selectRaw('COUNT(*) AS penerima_manfaat, SUM(rupiah) AS penyaluran')->first();
+            return self::selectRaw('COUNT(DISTINCT nik) AS penerima_manfaat, SUM(rupiah) AS penyaluran')->first();
         } catch (\Exception $e) {
 
             Log::error('Error fetching report summary: '.$e->getMessage());
@@ -126,15 +126,17 @@ class ReportModel extends Model
     {
         try {
             return DB::table('t_mustahik')
-                ->select(
-                    'nik',
-                    'nama_lengkap as nama_pm',
-                    'jenis_kelamin',
-                    'alamat_domisili as domisili',
-                    'ktp_alamat as alamat_ktp',
-                    'rupiah as nominal'
-                )
-                ->get();
+            ->select(
+                DB::raw('MD5(nik) as nik_hashed'),  // Apply MD5 to the 'nik' column
+                'nik as nik',
+                'nama_lengkap as nama_pm',
+                'jenis_kelamin',
+                'alamat_domisili as domisili',
+                'ktp_alamat as alamat_ktp',
+                'rupiah as nominal'
+            )
+            ->get();
+
         } catch (\Exception $e) {
             \Log::error('Error fetching tabulate data: '.$e->getMessage());
 
