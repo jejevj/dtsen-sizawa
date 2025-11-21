@@ -12,3 +12,8 @@ Route::get('/dtsen/report', [ReportController::class, 'index'])->name('report');
 
 Route::get('/dtsen/report/tabulate-data', [ReportController::class, 'getTabulateData'])
     ->name('report.tabulate');
+
+Route::get('/dtsen/proxy', function () {
+    $response = Http::get('http://simzat.kemenag.go.id/dtsen/report/tabulate-data');
+    return response()->json($response->json());
+});

@@ -982,40 +982,52 @@
 
                 });
 
-                $(document).ready(function () {
-                    $('#kt_datatable_zero_configuration').DataTable({
-                        processing: true,
-                        serverSide: true,
-
-                        ajax: '{{ url('report/tabulate-data') }}',
-                        
-                        columns: [
-                            { data: 'nik', name: 'nik' },
-                            { data: 'nama_pm', name: 'nama_pm' },
-                            {
-                                data: 'jenis_kelamin', name: 'jenis_kelamin', render: function (data, type, row) {
-                                    return data === 'M' ? 'Laki-laki' : (data === 'F' ? 'Perempuan' : data);
-                                }
-                            },
-                            { data: 'domisili', name: 'domisili' },
-                            { data: 'alamat_ktp', name: 'alamat_ktp' },
-                            {
-                                data: 'nominal',
-                                name: 'nominal',
-                                render: function (data, type, row) {
-                                    if (data === null || data === undefined) {
-                                        return 'Rp. 0';
-                                    }
-                                    let n = Number(data);
-                                    if (isNaN(n)) {
-                                        return data;
-                                    }
-                                    return 'Rp. ' + n.toLocaleString('id-ID');
-                                }
+                var table = $('#kt_datatable_zero_configuration').DataTable({
+                    processing: true,
+                    serverSide: false,
+                    data: [],
+                    columns: [
+                        { data: 'nik', name: 'nik' },
+                        { data: 'nama_pm', name: 'nama_pm' },
+                        {
+                            data: 'jenis_kelamin', name: 'jenis_kelamin', render: function (data, type, row) {
+                                return data === 'M' ? 'Laki-laki' : (data === 'F' ? 'Perempuan' : data);
                             }
-                        ]
-                    });
+                        },
+                        { data: 'domisili', name: 'domisili' },
+                        { data: 'alamat_ktp', name: 'alamat_ktp' },
+                        {
+                            data: 'nominal',
+                            name: 'nominal',
+                            render: function (data, type, row) {
+                                if (data === null || data === undefined) {
+                                    return 'Rp. 0';
+                                }
+                                let n = Number(data);
+                                if (isNaN(n)) {
+                                    return data;
+                                }
+                                return 'Rp. ' + n.toLocaleString('id-ID');
+                            }
+                        }
+                    ]
                 });
+
+                fetch('{{ url("/proxy") }}')
+                    .then(response => response.json())  // Parse the JSON response
+                    .then(data => {
+                        console.log('Full response:', data);  // Log the full response to check its structure
+
+                        if (data && data.data) {
+                            console.log('Data:', data.data); // Log the 'data' key specifically to check its contents
+
+                            // Ensure that the 'data' key exists and then populate DataTable
+                            table.clear().rows.add(data.data).draw();
+                        } else {
+                            console.error('No data found in the response');
+                            alert('No data found in the response');
+                        }
+                    })
 
 
             </script>
