@@ -5,7 +5,7 @@ use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 // Home route (Dashboard)
-Route::get('/dtsen/', [HomeController::class, 'index'])->name('dashboard');
+Route::get('/dtsen/home', [HomeController::class, 'index'])->name('dashboard');
 
 // Report route
 Route::get('/dtsen/report', [ReportController::class, 'index'])->name('report');

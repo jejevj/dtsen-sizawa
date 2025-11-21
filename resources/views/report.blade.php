@@ -987,7 +987,7 @@
                         processing: true,
                         serverSide: true,
 
-                        ajax: '{{ route('report.tabulate') }}',
+                        ajax: '{{ url('report/tabulate-data') }}',
                         columns: [
                             { data: 'nik', name: 'nik' },
                             { data: 'nama_pm', name: 'nama_pm' },
