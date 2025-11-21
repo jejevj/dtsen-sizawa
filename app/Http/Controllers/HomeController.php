@@ -12,6 +12,7 @@ class HomeController extends Controller
     public function index()
     {
         //
+        return view('home'); // This will render home.blade.php
     }
 
     /**

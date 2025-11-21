@@ -55,7 +55,6 @@
 
                 <div class="app-container container-xxl">
                     @yield('content')
-
                     @include('layouts.partials._footer')
                     @include('layouts.partials._scrolltop')
                     @include('layouts.partials._scripts')

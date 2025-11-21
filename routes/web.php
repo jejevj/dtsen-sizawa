@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
-Route::get('/report', function () {
-    return view('report');
-})->name('report');
+// Home route (Dashboard)
+Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+
+// Report route
+Route::get('/report', [ReportController::class, 'index'])->name('report');
+
+Route::get('/report/tabulate-data', [ReportController::class, 'getTabulateData'])
+    ->name('report.tabulate');
