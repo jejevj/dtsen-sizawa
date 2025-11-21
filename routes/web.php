@@ -14,7 +14,6 @@ Route::get('/dtsen/report/tabulate-data', [ReportController::class, 'getTabulate
     ->name('report.tabulate');
 
 Route::get('/dtsen/proxy', function () {
-    $response = Http::get('https://59b7fa006fb3.ngrok-free.app/dtsen/report/tabulate-data');
-
+    $response = Http::get('http://simzat.kemenag.go.id/dtsen/report/tabulate-data');
     return response()->json($response->json());
 });
