@@ -43,8 +43,6 @@ class ReportController extends Controller
             $programData = ReportModel::getPenyaluranByProgram();  // Get penyaluran by gender
             $bidangData = ReportModel::getPenyaluranByBidang();  // Get penyaluran by gender
             $timeSeriesData = ReportModel::getTimeSeriesData();
-            $tabulateData = ReportModel::getTabulateData();
-
             // Prepare the data array
             $data = [
                 'penerima_manfaat' => $summaryData->penerima_manfaat ?? 0,
@@ -78,51 +76,4 @@ class ReportController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

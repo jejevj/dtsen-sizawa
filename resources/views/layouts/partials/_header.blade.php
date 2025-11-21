@@ -42,8 +42,8 @@
                             class="menu-item menu-lg-down-accordion me-lg-2 {{ Route::currentRouteName() == 'dashboard' ? 'here show menu-here-bg' : '' }}">
 
                             <!--begin:Menu link-->
-                            <a href="{{ url('home') }}"
-                                class="menu-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}">
+                            <a href="{{ route('dashboard') }}"
+                                class="menu-link {{ Route::currentRouteName() == 'dashboard' ? 'active' : '' }}">
                                 <span class="menu-icon">
                                     <i class="ki-outline ki-category fs-3"></i>
                                 </span>
@@ -59,7 +59,7 @@
                             class="menu-item menu-lg-down-accordion me-lg-2 {{ Route::currentRouteName() == 'report' ? 'here show menu-here-bg' : '' }}">
 
                             <!--begin:Menu link-->
-                            <a href="{{ url('report') }}"
+                            <a href="{{ route('report') }}"
                                 class="menu-link {{ Route::currentRouteName() == 'report' ? 'active' : '' }}">
                                 <span class="menu-icon">
                                     <i class="ki-outline ki-notepad-bookmark fs-3"></i>

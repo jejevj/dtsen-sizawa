@@ -18,7 +18,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
              ->namespace($this->namespace)
-             ->prefix('dtsen') // Add this line to set the prefix
              ->group(base_path('routes/web.php'));
     }
 
