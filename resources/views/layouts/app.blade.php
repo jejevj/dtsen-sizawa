@@ -11,10 +11,7 @@
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="" />
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; connect-src 'self' *; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';">
-
-
+    
     {{--
     <meta property="og:url" content="https://keenthemes.com/metronic" /> --}}
     {{--
