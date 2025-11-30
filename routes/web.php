@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DetailPenerimaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LazController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +25,12 @@ Route::prefix('dtsen')->group(function () {
 
         return response()->json($response->json());
     })->name('proxy');
+
+
+
+    // HELPER ROUTES
+Route::get('/cities', [LocationController::class, 'getCities'])->name('getCities');
+Route::get('/subdistricts', [LocationController::class, 'getSubDistricts'])->name('getSubDistricts');
+Route::get('/villages', [LocationController::class, 'getVillages'])->name('getVillages' );
+Route::get('/laz', [LazController::class, 'getLazBySkala'])->name('getLazBySkala' );
 });

@@ -52,7 +52,7 @@
         .<div class="row ">
             {{-- Start Filter --}}
             <div class="col-md-4 col-lg-4 ">
-                <form action="">
+                <form id="filterForm">
                     <!--begin::Chart widget 15-->
                     <div class="card card-shadow-sm ">
                         <!--begin::Header-->
@@ -66,7 +66,8 @@
                             <!--begin::Toolbar-->
                             <div class="card-toolbar">
                                 <div class="card-toolbar">
-                                    <a href="#" class="btn btn-sm btn-primary">Terapkan</a>
+
+                                    {{-- <button type="button" class="btn btn-sm btn-primary" id="applyButton">Terapkan</button> --}}
                                 </div>
                                 <!--end::Menu-->
                             </div>
@@ -98,9 +99,9 @@
                                         </div>
                                         <div class="col ">
                                             <div class="form-check py-5">
-                                                <input class="form-check-input" type="checkbox" value="1" name="filter"
-                                                    id="filter" />
-                                                <label class="form-check-label">Pilih </label>
+                                                <input class="form-check-input" type="radio" value="1" name="filter"
+                                                    id="filter1" />
+                                                <label class="form-check-label" for="filter1">Pilih </label>
                                             </div>
                                         </div>
 
@@ -159,9 +160,9 @@
                                             </div>
                                             <div class="col">
                                                 <div class="form-check py-5">
-                                                    <input class="form-check-input" type="checkbox" value="2" name="filter"
-                                                        id="filter" />
-                                                    <label class="form-check-label">Pilih </label>
+                                                    <input class="form-check-input" type="radio" value="2" name="filter"
+                                                        id="filter2" />
+                                                    <label class="form-check-label" for="filter2">Pilih </label>
                                                 </div>
                                             </div>
 
@@ -172,9 +173,10 @@
                                             <div id="kt_job_ktp1" class="fs-6 ms-1 mb-5">
                                                 <select class="form-select" data-control="select2"
                                                     data-placeholder="-- Provinsi --" id="provinsi_ktp" name="provinsi_ktp">
-                                                    <option></option>
-                                                    <option value="1">Option 1</option>
-                                                    <option value="2">Option 2</option>
+                                                    <option value="">-- Provinsi --</option>
+                                                    @foreach($data['provinsiList'] as $p)
+                                                        <option value="{{ $p->provinsi_kode }}">{{ $p->provinsi_nama }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div id="kt_job_ktp2" class="fs-6 ms-1 mb-5">
@@ -182,8 +184,6 @@
                                                     data-placeholder="-- Kabupaten/Kota --" id="kabupaten_ktp"
                                                     name="kabupaten_ktp">
                                                     <option></option>
-                                                    <option value="1">Option 1</option>
-                                                    <option value="2">Option 2</option>
                                                 </select>
                                             </div>
                                             <div id="kt_job_ktp3" class="fs-6 ms-1 mb-5">
@@ -191,8 +191,6 @@
                                                     data-placeholder="-- Kecamatan --" id="kecamatan_ktp"
                                                     name="kecamatan_ktp">
                                                     <option></option>
-                                                    <option value="1">Option 1</option>
-                                                    <option value="2">Option 2</option>
                                                 </select>
                                             </div>
                                             <div id="kt_job_ktp4" class="fs-6 ms-1 mb-5">
@@ -200,8 +198,6 @@
                                                     data-placeholder="-- Kelurahan/Desa --" id="kelurahan_ktp"
                                                     name="kelurahan_ktp">
                                                     <option></option>
-                                                    <option value="1">Option 1</option>
-                                                    <option value="2">Option 2</option>
                                                 </select>
                                             </div>
                                             <div class="fs-6 ms-1 mb-6">
@@ -244,9 +240,9 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-check py-5">
-                                                <input class="form-check-input" type="checkbox" value="3" name="filter"
-                                                    id="filter" />
-                                                <label class="form-check-label">Pilih </label>
+                                                <input class="form-check-input" type="radio" value="3" name="filter"
+                                                    id="filter3" />
+                                                <label class="form-check-label" for="filter3">Pilih </label>
                                             </div>
                                         </div>
                                     </div>
@@ -258,9 +254,10 @@
                                             <select class="form-select" data-control="select2"
                                                 data-placeholder="-- Provinsi --" id="provinsi_domisili"
                                                 name="provinsi_domisili">
-                                                <option></option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
+                                                <option value="">-- Provinsi --</option>
+                                                @foreach($data['provinsiList'] as $p)
+                                                    <option value="{{ $p->provinsi_kode }}">{{ $p->provinsi_nama }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div id="kt_job_ktp2" class="fs-6 ms-1 mb-5">
@@ -328,9 +325,9 @@
 
                                         <div class="col">
                                             <div class="form-check py-5">
-                                                <input class="form-check-input" type="checkbox" value="4" name="filter"
-                                                    id="filter" />
-                                                <label class="form-check-label">Pilih </label>
+                                                <input class="form-check-input" type="radio" value="4" name="filter"
+                                                    id="filter4" />
+                                                <label class="form-check-label" for="filter4">Pilih </label>
                                             </div>
                                         </div>
                                     </div>
@@ -370,26 +367,27 @@
                                         <div class="fs-6 ms-1 mb-5">
                                             <select class="form-select" data-control="select2"
                                                 data-placeholder="-- Dokumen KTP --" name="dokumen_ktp" id="dokumen_ktp">
-                                                <option></option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
+                                                <option disabled>Status KTP</option>
+                                                <option value="1">Tersedia</option>
+                                                <option value="2">Tidak Tersedia</option>
                                             </select>
                                         </div>
                                         <div class="fs-6 ms-1 mb-5">
                                             <select class="form-select" data-control="select2"
                                                 data-placeholder="-- Agama --" name="agama" id="agama">
-                                                <option></option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
+                                                <option disabled>Pilih Agama</option>
+                                                @foreach($data['agamaList'] as $p)
+                                                    <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="fs-6 ms-1 mb-6">
                                             <select class="form-select" data-control="select2"
                                                 data-placeholder="-- Jenis Kelamin --" name="jenis_kelamin"
                                                 id="jenis_kelamin">
-                                                <option></option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
+                                                <option disabled>Jenis Kelamin</option>
+                                                <option value="M">Laki - Laki</option>
+                                                <option value="F">Perempuan</option>
                                             </select>
                                         </div>
                                     </div>
@@ -424,9 +422,9 @@
 
                                         <div class="col">
                                             <div class="form-check py-5">
-                                                <input class="form-check-input" type="checkbox" value="5" name="filter"
-                                                    id="filter" />
-                                                <label class="form-check-label">Pilih </label>
+                                                <input class="form-check-input" type="radio" value="5" name="filter"
+                                                    id="filter5" />
+                                                <label class="form-check-label" for="filter5">Pilih </label>
                                             </div>
                                         </div>
                                     </div>
@@ -439,9 +437,10 @@
                                             <select class="form-select" data-control="select2"
                                                 data-placeholder="-- Kategori Program --" name="kategori_program"
                                                 id="kategori_program">
-                                                <option></option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
+                                                <option disabled>Pilih Bidang</option>
+                                                @foreach($data['bidangList'] as $p)
+                                                    <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div id="kt_job_ktp1" class="fs-6 ms-1 mb-5">
@@ -452,8 +451,8 @@
                                             <select class="form-select" data-control="select2"
                                                 data-placeholder="-- Tipe Program --" name="tipe_program" id="tipe_program">
                                                 <option></option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
+                                                <option value="pml">Bantuan Langsung</option>
+                                                <option value="pmtl">Bantuan Tidak Langsung</option>
                                             </select>
                                         </div>
 
@@ -503,11 +502,11 @@
                             </div>
                             <!--end::Item-->
                             {{-- tes --}}
-                            <a href="#" class="btn btn-icon-secondary btn-primary">
+                            <button type="button" id="applyButton" class="btn btn-icon-secondary btn-primary">
                                 <i class="ki-duotone ki-filter-tick fs-1"><span class="path1"></span><span
                                         class="path2"></span></i>
                                 Terapkan Filter
-                            </a>
+                            </button>
                         </div>
                         <!--end::Body-->
                     </div>
@@ -1059,11 +1058,11 @@
                 });
 
                 $(document).ready(function () {
-                    $('#kt_datatable_zero_configuration').DataTable({
-                        processing: true,
-                        serverSide: true,
 
-                        ajax: '{{ route('report.tabulate') }}',
+                    var data = @json($data['table']);  // Pass the data from PHP to JavaScript
+                    console.log(data)
+                    $('#kt_datatable_zero_configuration').DataTable({
+                        data: data,
 
                         columns: [
                             { data: 'nik', name: 'nik', },
@@ -1095,17 +1094,17 @@
                                 render: function (data, type, row) {
                                     // Create the URL using the 'nik_hashed'
                                     var url = '{{ route("detail") }}';  // Replace :id with the actual hashed data
-                                    var url2 = '{{ route("detail2") }}?id='+data;  // Replace :id with the actual hashed data
+                                    var url2 = '{{ route("detail2") }}?id=' + data;  // Replace :id with the actual hashed data
 
                                     // Return a form with a hidden input for 'nik' and submit button
                                     return `
-                        <form action="${url}" method="POST" style="display:inline;">
-                            @csrf  <!-- Laravel CSRF token -->
-                            <input type="hidden" name="id" value="${data}">
-                            <button type="submit" class="btn btn-sm btn-warning">Detail</button>
-                        </form>
-                        <a href="${url2}">Detail 2</a>
-                    `;
+                                                                                                                                                                                                                                                                                                                                <form action="${url}" method="POST" style="display:inline;">
+                                                                                                                                                                                                                                                                                                                                    @csrf  <!-- Laravel CSRF token -->
+                                                                                                                                                                                                                                                                                                                                    <input type="hidden" name="id" value="${data}">
+                                                                                                                                                                                                                                                                                                                                    <button type="submit" class="btn btn-sm btn-warning">Detail</button>
+                                                                                                                                                                                                                                                                                                                                </form>
+
+                                                                                                                                                                                                                                                                                                                                `;
                                 }
 
                             }
@@ -1115,5 +1114,216 @@
 
 
             </script>
+
+
+            <script>
+
+                // Function to get the URL parameters
+                function getQueryParams() {
+                    var params = {};
+                    var queryString = window.location.search.substring(1);
+                    var urlParams = queryString.split('&');
+
+                    urlParams.forEach(function (param) {
+                        var keyValue = param.split('=');
+                        if (keyValue.length === 2) {
+                            params[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+                        }
+                    });
+
+                    return params;
+                }
+
+                // Fill the form fields with URL parameters
+                function autofillForm() {
+                    var params = getQueryParams();
+
+                    // Iterate over all form elements
+                    $('form').find('input, select, textarea, button').each(function () {
+                        var fieldName = $(this).attr('name') || $(this).attr('id'); // Use name or id of the field
+                        if (fieldName && params[fieldName]) {
+                            var fieldValue = params[fieldName];
+
+                            // Handle input fields (text, number, email, etc.)
+                            if ($(this).is('input[type="text"], input[type="number"], input[type="email"], textarea')) {
+                                $(this).val(fieldValue);
+                            }
+
+                            // Handle radio buttons
+                            if ($(this).is('input[type="radio"]') && $(this).val() === fieldValue) {
+                                $(this).prop('checked', true);
+                            }
+
+                            // Handle checkboxes
+                            if ($(this).is('input[type="checkbox"]') && $(this).val() === fieldValue) {
+                                $(this).prop('checked', true);
+                            }
+
+                            // Handle select dropdowns
+                            if ($(this).is('select') || $(this).hasClass('select2')) {
+                                $(this).val(fieldValue).trigger('change'); // For select2, use trigger('change') to refresh
+                            }
+
+                        }
+                    });
+
+
+                }
+                function initCascadingDropdown(parentSelectId, childSelectId, url, placeholder, nextLevelUrl = null, nextLevelSelectId = null) {
+                    $(parentSelectId).on('change', function () {
+                        var parentId = $(this).val(); // Get the selected value of the parent
+
+                        if (parentId) {
+                            $.ajax({
+                                url: url,
+                                type: 'GET',
+                                data: {
+                                    parent_id: parentId
+                                },
+                                success: function (response) {
+
+                                    $(childSelectId).empty().append('<option value="">' + placeholder + '</option>');
+                                    $.each(response.items, function (index, item) {
+                                        $(childSelectId).append('<option value="' + item.id + '">' + item.name + '</option>');
+                                    });
+                                    $(childSelectId).select2();
+                                    $(childSelectId).trigger('change');
+                                    var params = getQueryParams();
+                                    console.log(params.parentId); // Log the value of parentId from URL params
+                                    console.log(childSelectId)
+                                    console.log(params)
+                                    // Dynamically check if the key in params matches the childSelectId
+                                    $.each(params, function (key, value) {
+                                        if (key === childSelectId.replace('#', '')) { // Remove '#' if the ID has it
+                                            $(childSelectId).val(value).trigger('change'); // Set the value for child select2
+                                        }
+                                    });
+
+                                }
+                                ,
+                                error: function (xhr, status, error) {
+                                    console.error("AJAX Error: ", status, error); // Debugging: log any AJAX errors
+                                    alert("Failed to load data.");
+                                }
+                            });
+                        } else {
+                            $(childSelectId).empty().append('<option value="">' + placeholder + '</option>');
+                            if (nextLevelSelectId) {
+                                $(nextLevelSelectId).empty().append('<option value="">' + '-- Pilih --' + '</option>');
+                            }
+                        }
+                    });
+                }
+                $(document).ready(function () {
+                    initCascadingDropdown('#provinsi_ktp', '#kabupaten_ktp', '{{ route("getCities") }}', '-- Kabupaten/Kota --');
+                    initCascadingDropdown('#kabupaten_ktp', '#kecamatan_ktp', '{{ route("getSubDistricts") }}', '-- Kecamatan --');
+                    initCascadingDropdown('#kecamatan_ktp', '#kelurahan_ktp', '{{ route("getVillages") }}', '-- Kelurahan --');
+
+                    initCascadingDropdown('#provinsi_domisili', '#kabupaten_domisili', '{{ route("getCities") }}', '-- Kabupaten/Kota --');
+                    initCascadingDropdown('#kabupaten_domisili', '#kecamatan_domisili', '{{ route("getSubDistricts") }}', '-- Kecamatan --');
+                    initCascadingDropdown('#kecamatan_domisili', '#kelurahan_domisili', '{{ route("getVillages") }}', '-- Kelurahan --');
+
+                    // Default value for Skala (Nasional)
+                    var skalaDefault = 1; // Default value for Skala is 1 (Nasional)
+
+                    // Initialize Nama Laz dropdown based on the default Skala value
+                    getLazBySkala(skalaDefault);
+
+                    // When Skala dropdown changes
+                    $('#skala').on('change', function () {
+                        var selectedSkala = $(this).val(); // Get selected Skala value
+
+                        // Fetch the corresponding Nama Laz data based on Skala
+                        getLazBySkala(selectedSkala);
+                    });
+
+                    // Function to fetch Nama Laz based on Skala
+                    function getLazBySkala(skala) {
+                        $.ajax({
+                            url: '{{ route("getLazBySkala") }}',  // Route to fetch Laz data
+                            type: 'GET',
+                            data: { skala: skala }, // Pass the selected Skala value
+                            success: function (response) {
+                                // Clear the Nama Laz dropdown and add default placeholder
+                                $('#nama_laz').empty().append('<option></option>');
+
+                                // Populate the Nama Laz dropdown with the received data
+                                $.each(response.items, function (index, item) {
+                                    $('#nama_laz').append('<option value="' + item.id + '">' + item.name + '</option>');
+                                });
+
+                                // Reinitialize select2 if you're using it
+                                $('#nama_laz').select2();
+                                var params = getQueryParams();
+
+                                if (params.nama_laz) {
+                                    $('#nama_laz').val(params.nama_laz).trigger('change'); // For select2, use trigger('change') to refresh
+                                }
+                            },
+                            error: function () {
+                                alert("Failed to load Laz data.");
+                            }
+                        });
+                    }
+                    // When the Terapkan button is clicked
+                    $('#applyButton').on('click', function () {
+                        var formData = {}; // Object to hold form data
+
+                        $('#filterForm').find('input, select').each(function () {
+                            var name = $(this).attr('name'); // Get the name attribute of the element
+                            if (name) { // Make sure the element has a name attribute
+                                var value = $(this).val(); // Get the value of the input/selection
+                                // If the value is not empty, add it to the formData object
+                                if (value !== '' && value !== null) {
+                                    // If the element is a radio button, get the checked value
+                                    if ($(this).is(':radio')) {
+                                        if ($(this).is(':checked')) {
+                                            formData[name] = $(this).val(); // Store the value of the selected radio button
+                                        }
+                                    }
+                                    // If the element is a select dropdown, get the selected option value
+                                    else if ($(this).is('select')) {
+                                        formData[name] = value; // Store the value of the selected option
+                                    }
+                                    // For other elements (input, text, etc.), get the value
+                                    else {
+                                        formData[name] = value;
+                                    }
+                                }
+                            }
+                        });
+                        formData['valueMin'] = slider.noUiSlider.get(true)[0];
+                        console.log(slider.noUiSlider.get(true)[0])
+                        console.log(slider.noUiSlider.get(true)[1])
+                        formData['valueMax'] = slider.noUiSlider.get(true)[1];
+                        formData['is_filter'] = true;
+                        var queryString = $.param(formData);
+
+                        // Create the full URL with the route and query string
+                        var url = "{{ route('report') }}?" + queryString;
+
+                        // Redirect to the URL with the query string
+                        window.location.href = url;
+                    });
+
+
+                    var params = getQueryParams();
+                    if (params.valueMin && params.valueMax) {
+                        // Convert to integers
+                        var valueMin = parseInt(params.valueMin, 10);
+                        var valueMax = parseInt(params.valueMax, 10);
+
+
+                        slider.noUiSlider.set([valueMin, valueMax]);
+                    }
+
+
+                    // Call autofill function
+                    autofillForm();
+                });
+
+
+            </script>
+
         @endsection
 @endsection
