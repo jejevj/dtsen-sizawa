@@ -1181,7 +1181,7 @@
 
                         if (parentId) {
                             $.ajax({
-                                url: url,
+                                url: url.replace(/^http:\/\//, 'https://'),
                                 type: 'GET',
                                 data: {
                                     parent_id: parentId
