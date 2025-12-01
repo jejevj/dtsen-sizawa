@@ -30,7 +30,7 @@
         integrity="sha512-MKxcSu/LDtbIYHBNAWUQwfB3iVoG9xeMCm32QV5hZ/9lFaQZJVaXfz9aFa0IZExWzCpm7OWvp9zq9gVip/nLMg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!--begin::Vendor Stylesheets(used for this page only)-->
-    <link href="https://preview.keenthemes.com/html/metronic/docs/assets/plugins/custom/prismjs/prismjs.bundle.css"
+    <link href="assets/plugins/custom/prismjs/prismjs.bundle.css"
         rel="stylesheet" type="text/css" />
     <!--end::Vendor Stylesheets-->
 
