@@ -2,7 +2,7 @@
 
 @php
     use App\Helpers\GlobalHelper;
-    
+
     // Call the static method from your model or controller directly in Blade
 @endphp
 
@@ -73,7 +73,8 @@
                             <div class="card-toolbar">
                                 <div class="card-toolbar">
 
-                                    {{-- <button type="button" class="btn btn-sm btn-primary" id="applyButton">Terapkan</button> --}}
+                                    {{-- <button type="button" class="btn btn-sm btn-primary"
+                                        id="applyButton">Terapkan</button> --}}
                                 </div>
                                 <!--end::Menu-->
                             </div>
@@ -1065,10 +1066,11 @@
 
                 $(document).ready(function () {
 
-                    var data = @json($data['table']);  // Pass the data from PHP to JavaScript
-                    console.log(data)
                     $('#kt_datatable_zero_configuration').DataTable({
-                        data: data,
+                        processing: true,
+                        serverSide: true,
+
+                        ajax: '{{ route('report.tabulate') }}'.replace(/^http:\/\//, 'https://'),
 
                         columns: [
                             { data: 'nik', name: 'nik', },
@@ -1104,13 +1106,13 @@
 
                                     // Return a form with a hidden input for 'nik' and submit button
                                     return `
-                                                                                                                                                                                                                                                                                                                                <form action="${url}" method="POST" style="display:inline;">
-                                                                                                                                                                                                                                                                                                                                    @csrf  <!-- Laravel CSRF token -->
-                                                                                                                                                                                                                                                                                                                                    <input type="hidden" name="id" value="${data}">
-                                                                                                                                                                                                                                                                                                                                    <button type="submit" class="btn btn-sm btn-warning">Detail</button>
-                                                                                                                                                                                                                                                                                                                                </form>
+                                                                                                                                                                                                                                                                                                                                        <form action="${url}" method="POST" style="display:inline;">
+                                                                                                                                                                                                                                                                                                                                            @csrf  <!-- Laravel CSRF token -->
+                                                                                                                                                                                                                                                                                                                                            <input type="hidden" name="id" value="${data}">
+                                                                                                                                                                                                                                                                                                                                            <button type="submit" class="btn btn-sm btn-warning">Detail</button>
+                                                                                                                                                                                                                                                                                                                                        </form>
 
-                                                                                                                                                                                                                                                                                                                                `;
+                                                                                                                                                                                                                                                                                                                                        `;
                                 }
 
                             }
@@ -1245,7 +1247,7 @@
 
                     // Function to fetch Nama Laz based on Skala
                     function getLazBySkala(skala) {
-                        
+
                         $.ajax({
                             url: '{{ route("getLazBySkala") }}'.replace(/^http:\/\//, 'https://'),  // Route to fetch Laz data
                             type: 'GET',
