@@ -87,3 +87,10 @@ class GlobalHelper
             ->get(); // Assuming the Laz table has 'id' and 'name' columns
     }
 }
+
+if (!function_exists('getDataLazHelper')) {
+    function getDataLazHelper($skala) {
+
+        return GlobalHelper::getLazBySkala($skala);
+    }
+}

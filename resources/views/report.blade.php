@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@php
+    use App\Helpers\GlobalHelper;
+    
+    // Call the static method from your model or controller directly in Blade
+@endphp
+
 @section('content')
     <style>
         .highcharts-figure,
@@ -1239,6 +1245,7 @@
 
                     // Function to fetch Nama Laz based on Skala
                     function getLazBySkala(skala) {
+                        
                         $.ajax({
                             url: '{{ route("getLazBySkala") }}',  // Route to fetch Laz data
                             type: 'GET',

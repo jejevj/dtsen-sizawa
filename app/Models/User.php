@@ -17,32 +17,20 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    use HasFactory, Notifiable;
+
+    // Point to your existing tuser table
+    protected $table = 'tuser';  
+
+    // Define the primary key if it's different from the default `id`
+    protected $primaryKey = 'iduser'; 
+
+    // Disable timestamps if your table doesn't use them
+    public $timestamps = false;  
+
+    // You can also define other fields such as 'name' if they're different
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'email', 'user_password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
 }
