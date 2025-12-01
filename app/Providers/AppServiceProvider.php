@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Response;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,9 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-            // Modify the Content Security Policy header globally
-    Response::macro('csp', function () {
-        return response()->header('Content-Security-Policy', "default-src 'self'; connect-src 'self' http://simzat.kemenag.go.id");
-    });
+        URL::forceScheme('https');
+        // Modify the Content Security Po
+        // licy header globally
+        Response::macro('csp', function () {
+            return response()->header('Content-Security-Policy', "default-src 'self'; connect-src 'self' http://simzat.kemenag.go.id");
+        });
     }
 }
