@@ -72,7 +72,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route('login') }}',  // Laravel route for login
+                url: '{{ route('login') }}'.replace(/^http:\/\//, 'https://'),  // Laravel route for login
                 data: formData,
                 success: function (response) {
                     // If login is successful, close the modal and navigate to the desired page
