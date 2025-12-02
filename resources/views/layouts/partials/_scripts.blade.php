@@ -60,15 +60,21 @@
         </div>
     </div>
 </div>
-
+@if(session('need_login'))
+<script>
+    window.onload = function() {
+        showSuccessAlert('Akses Tidak Ada!','Silahkan Login Terlebih Dahulu', 'danger');
+    };
+</script>
+@endif
 
 
 <script>
     $(document).ready(function () {
         $('#loginForm').on('submit', function (e) {
-            e.preventDefault();  // Prevent the default form submission
+            e.preventDefault();
 
-            var formData = $(this).serialize();  // Serialize the form data
+            var formData = $(this).serialize();
 
             $.ajax({
                 type: 'POST',
@@ -80,7 +86,7 @@
                         $('#loginModal').modal('hide');
 
                         // Show success alert for 3000ms (3 seconds)
-                        showSuccessAlert('Selamat Datang!');
+                        showSuccessAlert('Selamat Datang!','Berhasil Masuk', 'primary');
 
                         // Redirect to the desired page after alert
                         setTimeout(function () {
@@ -97,10 +103,10 @@
     });
 
     // Function to show floating success alert
-    function showSuccessAlert(message) {
+    function showSuccessAlert(title,message, color) {
         var alertHtml = `
 
-        <div class="container alert-floating alert alert-dismissible bg-primary d-flex flex-column flex-sm-row p-5 mb-10 col-2" id="successAlert">
+        <div class="container alert-floating alert alert-dismissible bg-${color} d-flex flex-column flex-sm-row p-5 mb-10 col-3" id="successAlert">
             <!--begin::Icon-->
             <i class="ki-duotone ki-search-list fs-2hx text-light me-4 mb-5 mb-sm-0"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
             <!--end::Icon-->
@@ -108,7 +114,7 @@
             <!--begin::Wrapper-->
             <div class="d-flex flex-column text-light pe-0 pe-sm-10">
                 <!--begin::Title-->
-                <h4 class="mb-2  text-white">Berhasil Masuk</h4>
+                <h4 class="mb-2  text-white">${message}</h4>
                 <!--end::Title-->
 
                 <!--begin::Content-->
@@ -141,5 +147,5 @@
 
 </script>
 <style>
-   
+
 </style>

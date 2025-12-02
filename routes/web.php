@@ -15,13 +15,13 @@ Route::prefix('dtsen')->group(function () {
     // Report route
     Route::get('/report', [ReportController::class, 'index'])->name('report')->middleware('auth');
     // Detail Penerima Manfaat route
-    Route::post('/detail', [DetailPenerimaController::class, 'index'])->name('detail');
-    Route::get('/detail2', [DetailPenerimaController::class, 'index2'])->name('detail2');
+    Route::post('/detail', [DetailPenerimaController::class, 'index'])->name('detail')->middleware('auth');
+    Route::get('/detail2', [DetailPenerimaController::class, 'index2'])->name('detail2')->middleware('auth');
 
     Route::get('/tabulate-data', [ReportController::class, 'getTabulateData'])
-        ->name('report.tabulate');
+        ->name('report.tabulate')->middleware('auth');
     Route::get('/proxy', function () {
-        $response = Http::get('http://simzat.kemenag.go.id/dtsen/report/tabulate-data');
+        $response = Http::get('https://simzat.kemenag.go.id/dtsen/report/tabulate-data')->middleware('auth');
 
         return response()->json($response->json());
     })->name('proxy');
@@ -39,14 +39,14 @@ Route::prefix('dtsen')->group(function () {
     // Route::get('login', function () {
     //     return view('auth.login');
     // })->name('login');
-    Route::get('/login', function() {
-    return redirect()->route('dashboard'); // This ensures the login page is not accessed directly
-});
-
+    Route::get('/login', function () {
+        return redirect()->route('dashboard')->with('need_login', true);
+    });
     Route::post('login', [LoginController::class, 'login'])->name('login');
 
     Route::post('logout', function () {
         Auth::logout();
+
         return redirect()->route('dashboard');
     })->name('logout');
 });
