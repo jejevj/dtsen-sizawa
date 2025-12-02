@@ -1065,12 +1065,13 @@
                 });
 
                 $(document).ready(function () {
-
+                    var data = @json($data['table']);  // Pass the data from PHP to JavaScript
+                    // console.log(data)
                     $('#kt_datatable_zero_configuration').DataTable({
                         processing: true,
                         serverSide: true,
-
-                        ajax: '{{ route('report.tabulate') }}'.replace(/^http:\/\//, 'https://'),
+                        data: data,
+                        // ajax: '{{ route('report.tabulate') }}'.replace(/^http:\/\//, 'https://'),
 
                         columns: [
                             { data: 'nik', name: 'nik', },
@@ -1106,13 +1107,13 @@
 
                                     // Return a form with a hidden input for 'nik' and submit button
                                     return `
-                                                                                                                                                                                                                                                                                                                                        <form action="${url}" method="POST" style="display:inline;">
-                                                                                                                                                                                                                                                                                                                                            @csrf  <!-- Laravel CSRF token -->
-                                                                                                                                                                                                                                                                                                                                            <input type="hidden" name="id" value="${data}">
-                                                                                                                                                                                                                                                                                                                                            <button type="submit" class="btn btn-sm btn-warning">Detail</button>
-                                                                                                                                                                                                                                                                                                                                        </form>
+                                                                                                                                                                                                                                                                                                                                                        <form action="${url}" method="POST" style="display:inline;">
+                                                                                                                                                                                                                                                                                                                                                            @csrf  <!-- Laravel CSRF token -->
+                                                                                                                                                                                                                                                                                                                                                            <input type="hidden" name="id" value="${data}">
+                                                                                                                                                                                                                                                                                                                                                            <button type="submit" class="btn btn-sm btn-warning">Detail</button>
+                                                                                                                                                                                                                                                                                                                                                        </form>
 
-                                                                                                                                                                                                                                                                                                                                        `;
+                                                                                                                                                                                                                                                                                                                                                        `;
                                 }
 
                             }
