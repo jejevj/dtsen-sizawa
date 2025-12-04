@@ -24,7 +24,7 @@
                 <!--begin::Overlay-->
                 <div class="overlay">
                     <!--begin::Image-->
-                    <img class="w-100 card-rounded" src="assets/media/images-bg-home.png" alt="">
+                    <img class="w-100 card-rounded" src="assets/media/images-bg-home.jpg" alt="">
                     <!--end::Image-->
 
                     <!--begin::Links-->
