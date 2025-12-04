@@ -24,9 +24,7 @@
                 <!--begin::Overlay-->
                 <div class="overlay">
                     <!--begin::Image-->
-                    <img class="w-100 card-rounded"
-                        src="https://t3.ftcdn.net/jpg/02/31/33/74/360_F_231337496_xyNRh0BWimi5ZSV6o0Z1qFpiZwta9Lox.jpg"
-                        alt="">
+                    <img class="w-100 card-rounded" src="assets/media/image-dark.png" alt="">
                     <!--end::Image-->
 
                     <!--begin::Links-->
@@ -244,8 +242,8 @@
                 <div class="card card-bordered mt-3">
                     <div class="card-header">
                         <form action="" class="mt-4">
-                            <select class="form-select" data-control="select2" data-placeholder="Jumlah Total Penerimaan Tahun Lalu" id="skala"
-                                name="skala">
+                            <select class="form-select" data-control="select2"
+                                data-placeholder="Jumlah Total Penerimaan Tahun Lalu" id="skala" name="skala">
                                 <option></option>
                                 <option value="1">Jumlah Total Penerimaan Tahun Lalu</option>
                                 <option value="2">Jumlah Total Penyaluran Tahun Lalu</option>

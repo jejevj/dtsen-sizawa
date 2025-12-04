@@ -18,7 +18,7 @@
                 <a href="index.html" class="me-5 me-lg-9">
                     <img alt="Logo" src="https://2017.kemenag.go.id/public/templates/unify/img/logo-kemenag-dark.png"
                         class="h-25px h-lg-30px theme-light-show" />
-                    <img alt="Logo" src="https://i.ibb.co.com/4Zth5784/image.png"
+                    <img alt="Logo" src="assets/media/image-dark.png"
                         class="h-25px h-lg-30px theme-dark-show" />
                 </a>
                 <!--end::Logo image-->
