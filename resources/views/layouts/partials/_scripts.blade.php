@@ -60,13 +60,6 @@
         </div>
     </div>
 </div>
-@if(session('need_login'))
-    <script>
-        window.onload = function () {
-            showSuccessAlert('Akses Tidak Ada!', 'Silahkan Login Terlebih Dahulu', 'danger');
-        };
-    </script>
-@endif
 
 
 <script>
@@ -78,7 +71,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route('login') }}'
+                url: '{{ route('login') }}',
                 data: formData,
                 success: function (response) {
                     // If login is successful, close the modal and navigate to the desired page
@@ -147,6 +140,14 @@
 
 
 
+</script>
+@if(session('need_login'))
+    <script>
+
+        window.onload = function () {
+            showSuccessAlert('Akses Tidak Ada!', 'Silahkan Login Terlebih Dahulu', 'danger');
+        };
+@endif
 </script>
 <style>
 
