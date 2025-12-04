@@ -47,8 +47,8 @@
                 <form method="POST" action="{{ route('login') }}" id="loginForm">
                     @csrf
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="user_id" class="form-label">NIP</label>
+                        <input type="text" class="form-control" id="user_id" name="user_id" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
@@ -78,7 +78,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route('login') }}'.replace(/^http:\/\//, 'https://'),  // Laravel route for login
+                url: '{{ route('login') }}'
                 data: formData,
                 success: function (response) {
                     // If login is successful, close the modal and navigate to the desired page

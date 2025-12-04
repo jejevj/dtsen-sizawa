@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     // You can also define other fields such as 'name' if they're different
     protected $fillable = [
-        'email', 'user_password',
+        'user_id', 'user_password',
     ];
 
 }

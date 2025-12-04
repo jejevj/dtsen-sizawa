@@ -1246,7 +1246,7 @@
                     function getLazBySkala(skala) {
 
                         $.ajax({
-                            url: '{{ route("getLazBySkala") }}'.replace(/^http:\/\//, 'https://'),  // Route to fetch Laz data
+                            url: '{{ route("getLazBySkala") }}',  // Route to fetch Laz data
                             type: 'GET',
                             data: { skala: skala }, // Pass the selected Skala value
                             success: function (response) {
