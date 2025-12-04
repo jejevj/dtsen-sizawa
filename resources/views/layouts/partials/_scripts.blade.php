@@ -93,10 +93,10 @@
                 }
             });
         });
-
-        // Function to show floating success alert
-        function showSuccessAlert(title, message, color) {
-            var alertHtml = `
+    });
+    // Function to show floating success alert
+    function showSuccessAlert(title, message, color) {
+        var alertHtml = `
 
         <div class="container alert-floating alert alert-dismissible bg-${color} d-flex flex-column flex-sm-row p-5 mb-10 col-3" id="successAlert">
             <!--begin::Icon-->
@@ -123,20 +123,19 @@
         </div>
     `;
 
-            // Append the alert to the body
-            $('body').append(alertHtml);
+        // Append the alert to the body
+        $('body').append(alertHtml);
 
-            // Show the alert with animation
-            $('#successAlert').addClass('show');
+        // Show the alert with animation
+        $('#successAlert').addClass('show');
 
-            // Hide the alert after 3000ms (3 seconds)
-            setTimeout(function () {
-                $('#successAlert').removeClass('show');
-                $('#successAlert').remove();  // Remove the alert from the DOM
-            }, 3000);
-        }
+        // Hide the alert after 3000ms (3 seconds)
+        setTimeout(function () {
+            $('#successAlert').removeClass('show');
+            $('#successAlert').remove();  // Remove the alert from the DOM
+        }, 3000);
+    }
 
-    });
 
 
 
@@ -147,8 +146,8 @@
         window.onload = function () {
             showSuccessAlert('Akses Tidak Ada!', 'Silahkan Login Terlebih Dahulu', 'danger');
         };
+    </script>
 @endif
-</script>
 <style>
 
 </style>
