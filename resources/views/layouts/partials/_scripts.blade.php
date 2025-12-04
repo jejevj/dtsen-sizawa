@@ -68,10 +68,15 @@
             e.preventDefault();
 
             var formData = $(this).serialize();
+            const loginUrl = @if (App::environment(environments: 'local'))
+                '{{ route('login', [], false) }}';
+            @else
+                '{{ route('login', [], true) }}'; // Menggunakan HTTPS di produksi
+            @endif
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route('login') }}',
+                url: loginUrl, // Gunakan variabel yang sudah ditentukan
                 data: formData,
                 success: function (response) {
                     // If login is successful, close the modal and navigate to the desired page
