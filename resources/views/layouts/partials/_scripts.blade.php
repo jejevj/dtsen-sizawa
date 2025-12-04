@@ -14,7 +14,7 @@
 <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 <script src="assets/js/leaflet.js"></script>
-<script src="assets/plugins/global/plugins.bundle.js"></script> 
+<script src="assets/plugins/global/plugins.bundle.js"></script>
 
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -100,7 +100,15 @@
     function showSuccessAlert(title, message, color) {
         var alertHtml = `
 
-        <div class="container alert-floating alert alert-dismissible bg-${color} d-flex flex-column flex-sm-row p-5 mb-10 col-3" id="successAlert">
+        <div  class="container alert-floating alert alert-dismissible bg-${color} d-flex flex-column flex-sm-row p-5 mb-10 col-3" id="successAlert"
+                 style="
+         position: fixed;
+         bottom: 20px;       /* distance from bottom */
+         left: 50%;          /* center horizontally */
+         transform: translateX(-50%);
+         z-index: 1050;      /* make sure it floats above other elements */
+     ">
+
             <!--begin::Icon-->
             <i class="ki-duotone ki-search-list fs-2hx text-light me-4 mb-5 mb-sm-0"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
             <!--end::Icon-->
