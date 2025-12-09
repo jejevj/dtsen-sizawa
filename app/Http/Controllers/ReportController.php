@@ -75,7 +75,7 @@ class ReportController extends Controller
 
             // If filter is applied
             if (! empty($filter)) {
-                $params = $this->getValidParams($request->all());
+                $params = $request->all();
 
                 // Check if params are valid, otherwise set default values or error message
                 if (isset($params['error'])) {
