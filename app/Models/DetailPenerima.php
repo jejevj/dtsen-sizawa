@@ -94,6 +94,29 @@ class DetailPenerima extends Model
                 $item->jenis_kelamin = ($item->prev_jenis_kelamin === $item->jenis_kelamin) ? null : $item->jenis_kelamin;
                 $item->agama = ($item->prev_agama === $item->agama) ? null : $item->agama;
                 $item->nik = ($item->prev_nik === $item->nik) ? null : $item->nik;
+                /* ---------- format birth‑date --------------------------------- */
+                if ($item->lahir_tanggal) {
+                    // `Carbon` is already bundled with Laravel; use the fully‑qualified name
+                    $item->lahir_tanggal = \Carbon\Carbon::parse($item->lahir_tanggal)
+                        ->locale('id')                 // Indonesian locale
+                        ->isoFormat('DD MMMM YYYY');   // e.g. 02 Januari 1990
+                }
+                /* -------------------------------------------------------
+             *  Convert the gender code to human‑readable text
+             * ------------------------------------------------------- */
+                if ($item->jenis_kelamin !== null) {
+                    switch ($item->jenis_kelamin) {
+                        case 'F':
+                            $item->jenis_kelamin = 'Perempuan';
+                            break;
+                        case 'M':
+                            $item->jenis_kelamin = 'Laki - Laki';
+                            break;
+                        default:
+                            // keep the original value if it’s something else
+                            break;
+                    }
+                }
 
                 // Remove temporary columns
                 unset($item->prev_nama_lengkap);

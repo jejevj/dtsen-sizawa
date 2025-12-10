@@ -1193,8 +1193,8 @@
 
                         if (parentId) {
                             $.ajax({
-                                // url: url, //Development
-                                url: url.replace(/^http:\/\//, 'https://'), //Production
+                                url: url, //Development
+                                // url: url.replace(/^http:\/\//, 'https://'), //Production
                                 type: 'GET',
                                 data: {
                                     parent_id: parentId

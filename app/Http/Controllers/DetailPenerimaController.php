@@ -24,10 +24,26 @@ class DetailPenerimaController extends Controller
         // dd($detailPenerimaMain);
         $firstDetail = $detailPenerima->first();
 
+        $orderedData = collect($detailPenerimaMain)->map(function ($item) {
+            // pull the three keys that must come first
+            $nik = $item->nik ?? null;
+            $kk = $item->kk ?? null;
+            $nama = $item->nama_lengkap ?? null;
+
+            // remove them from the original object
+            unset($item->nik, $item->kk, $item->nama_lengkap);
+
+            // build a *new* object with the required order
+            return collect([
+                'nik' => $nik,
+                'kk' => $kk,
+                'nama_lengkap' => $nama,
+            ])->merge($item)->all();
+        });
         $data = [
             'detailPenerima' => $detailPenerima,
             'firstDetail' => $firstDetail,
-            'dataDetail' => $detailPenerimaMain
+            'dataDetail' => $orderedData,
         ];
 
         // dump($id);
