@@ -73,8 +73,8 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route('login') }}', //Development
-                // url: '{{ route('login') }}'.replace(/^http:\/\//, 'https://'), //Production
+                // url: '{{ route('login') }}', //Development
+                url: '{{ route('login') }}'.replace(/^http:\/\//, 'https://'), //Production
                 data: formData,
                 success: function (response) {
                     // If login is successful, close the modal and navigate to the desired page
