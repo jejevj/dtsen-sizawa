@@ -11,15 +11,31 @@
         <div class="row mb-5">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header text-center justify-content-center">
+                    <div class="card-header">
                         <h3 class="card-title">Profil Penerima</h3>
+                        <div class="card-toolbar">
+                            <div class="card-toolbar">
+                                <button type="button" id="cetakPDF" class="btn btn-icon-secondary btn-danger">
+                                    <i class="ki-duotone ki-document fs-1"><span class="path1"></span><span
+                                            class="path2"></span></i>
+                                    PDF
+                                </button>
+                            </div>
+                            <!--end::Menu-->
+                        </div>
                     </div>
-                    <div class="text-center pt-5">
+                </div>
+            </div>
+            <div class="col-md-12 mt-3" id="cetakArea">
+                <div class="card">
+                    <div class="card-header justify-content-center">
+                        <div class="text-center mt-5">
+                            <h3>
+                                <strong>Nomor KTP (NIK):</strong> {{ $data['firstDetail']->nik }}
+                            </h3>
+                        </div>
+                    </div>
 
-                        <h4>
-                            <strong>Nomor KTP (NIK):</strong> {{ $data['firstDetail']->nik }}
-                        </h4>
-                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover table-bordered table-hovered tg" id="dataTable">
@@ -31,42 +47,14 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody">
-
-                                    <!-- Data rows will be inserted here by JavaScript -->
-
                                 </tbody>
                             </table>
                         </div>
-
-                        {{-- <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Nomor KTP (NIK):</strong> {{ $data['firstDetail']->nik }}
-                            </li>
-                            <li class="list-group-item"><strong>Nama Lengkap:</strong>
-                                {{ $data['firstDetail']->nama_lengkap }}</li>
-                            <li class="list-group-item"><strong>Nomor KK:</strong> {{ $data['firstDetail']->kk }}
-                            </li>
-                            <li class="list-group-item"><strong>Agama:</strong> {{ $data['firstDetail']->agama }}</li>
-                            <li class="list-group-item"><strong>Status Kawin:</strong>
-                                {{ $data['firstDetail']->kawin_status == 'kw' ? 'Kawin' : 'Belum Kawin' }}</li>
-                            <li class="list-group-item"><strong>Tanggal Lahir:</strong>
-                                {{ \Carbon\Carbon::parse($data['firstDetail']->lahir_tanggal)->format('d M Y') }}</li>
-                            <li class="list-group-item"><strong>Jenis Kelamin:</strong>
-                                {{ $data['firstDetail']->jenis_kelamin == 'M' ? 'Laki-laki' : 'Perempuan' }}</li>
-                            <li class="list-group-item"><strong>Alamat Domisili:</strong>
-                                {{ $data['firstDetail']->alamat_domisili }}</li>
-                            <li class="list-group-item"><strong>Program:</strong> {{ $data['firstDetail']->program_nama }}
-                            </li>
-                            <li class="list-group-item"><strong>Lembaga:</strong> {{ $data['firstDetail']->laz_nama }}</li>
-                            <li class="list-group-item"><strong>Tanggungan:</strong> {{ $data['firstDetail']->tanggungan }}
-                            </li>
-                        </ul> --}}
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-12 mt-3">
-                <div class="card">
-                       <div class="card-header">
+                <div class="card mt-3 pt-3">
+                    <div class="card-header">
                         <h3 class="card-title">Detail Program Yang Diterima</h3>
                     </div>
                     <div class="card-body">
@@ -90,7 +78,8 @@
                                         <td>{{ $detail->nama_lengkap }}</td>
                                         <td>{{ $detail->laz_nama }}</td>
                                         <td>{{ $detail->program_nama }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($detail->tanggal_terima)->locale('id')->isoFormat('DD MMMM YYYY') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($detail->tanggal_terima)->locale('id')->isoFormat('DD MMMM YYYY') }}
+                                        </td>
                                         <td>
                                             {{ $detail->tipe_penerimaan == 'pml' ? 'Bantuan Langsung' : 'Bantuan Tidak Langsung' }}
                                             </li>
@@ -102,114 +91,144 @@
                         </table>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
 
     @section('content_scripts')
         <script>
-            let data = @json($data['dataDetail']); // Your data from the backend
-
-            // console.log(data);
-            // Create a variable to store the previous values of keys
-            let previousValues = {};
-
+            let data = @json($data['dataDetail']);      // <-- your JSON payload
             const tableBody = document.getElementById('tableBody');
+            const keys = Object.keys(data[0]);     // all columns in the payload
 
-            // Get the keys from the first item in the data array (assuming all items have the same structure)
-            const keys = Object.keys(data[0]);
+            // ------------- 2️⃣  Key → display name map -------------
+            const keyMap = {
+                'jenis_kelamin': 'Jenis Kelamin',
+                'nama_lengkap': 'Nama Lengkap',
+                'nik': 'NIK',
+                'lahir_tanggal': 'Tanggal Lahir',
+                'agama': 'Agama',
+                'alamat_domisili': 'Alamat Domisili',
+                'ktp_alamat': 'Alamat KTP',
+                'provinsi_nama': 'Provinsi Domisili',
+                'kabkota_nama': 'Kabupaten / Kota Domisili',
+                'kecamatan_nama': 'Kecamatan Domisili',
+                'kelurahan_nama': 'Kelurahan Domisili',
+                'ktp_provinsi_nama': 'Provinsi KTP',
+                'ktp_kabkota_nama': 'Kabupaten / Kota KTP',
+                'ktp_kecamatan_nama': 'Kecamatan KTP',
+                'ktp_kelurahan_nama': 'Kelurahan KTP'
+            };
 
-            let previousValues2 = {};
-            // Loop through each key (the column headers)
-            keys.forEach((key) => {
-                // Loop through each item in the data and group the values for this key
-                if (key === 'Nominal_Bantuan') {
-                    return; // This skips the rest of the code in the loop for 'rupiah' key
+            // ------------- 3️⃣  Build the table -------------
+            keys.forEach(key => {
+                // Skip columns that you don’t want to display
+                if (['Nominal_Bantuan', 'laz_nama', 'created_at', 'skala', 'rupiah', 'program_nama'].includes(key)) {
+                    return;
                 }
-                if (key === 'laz_nama') {
-                    return; // This skips the rest of the code in the loop for 'rupiah' key
-                }
-                if (key === 'created_at') {
-                    return; // This skips the rest of the code in the loop for 'rupiah' key
-                }
-                if (key === 'skala') {
-                    return; // This skips the rest of the code in the loop for 'rupiah' key
-                }
-                data.forEach((item, index) => {
-                    if (item[key] == null) {
-                        return;
-                    } else {
-                        // console.log(index)
-                        // skip the first element (no previous to compare with)
-                        if (index > 0 && item[key] === data[index - 1][key]) {
-                            // current value is the same as the previous item’s value
-                            return;                     // or `continue;` if you use a `for` loop
-                        } else {
-                            const row = document.createElement('tr');
-                            // Create the first cell for the key name, only for the first row
-                            const cell1 = document.createElement('td');
-                            if (index === 0) {
-                                cell1.textContent = key;  // The name of the key (e.g., 'provinsi_nama')
-                            } else {
-                                cell1.textContent = '';  // Empty cell for subsequent rows
-                            }
-                            // Create the second cell for the value of the key
-                            const cell2 = document.createElement('td');
-                            cell2.textContent = item[key] || '';  // Get the value for this key (or empty string if undefined)
 
-                            // Create the third cell for the second value (if available), else empty
-                            const cell3 = document.createElement('td');
-                            // You can leave this cell empty or set it as needed
-                            cell3.textContent = item['laz_nama']; // Leave empty or set a default value
-                            // Append the cells to the row
-                            row.appendChild(cell1);
-                            row.appendChild(cell2);
-                            row.appendChild(cell3);
+                let headerInserted = false;   // flag so the header is written only once
 
-                            // Append the row to the table body
-                            tableBody.appendChild(row);
+                data.forEach((item, idx) => {
+                    // 1. Skip null values
+                    if (item[key] == null) return;
+                    // 2. Skip duplicate consecutive values
+                    if (idx > 0 && item[key] === data[idx - 1][key]) return;
 
-                        }
-                    }
+                    const row = document.createElement('tr');
+
+                    // ---- 3a. Header cell (first row of this key) ----
+                    const cell1 = document.createElement('td');
+                    cell1.textContent = headerInserted ? '' : (keyMap[key] || key);
+                    cell1.classList.add('fw-bold'); // <‑‑ add bold style
+                    headerInserted = true;
+
+                    // ---- 3b. Value cell ----
+                    const cell2 = document.createElement('td');
+                    cell2.textContent = item[key] ?? '';
+
+                    // ---- 3c. LAZ name cell (kept as is) ----
+                    const cell3 = document.createElement('td');
+                    cell3.textContent = item['laz_nama'] ?? '';
+
+                    // Assemble the row
+                    row.appendChild(cell1);
+                    row.appendChild(cell2);
+                    row.appendChild(cell3);
+
+                    // Append the row to the table body
+                    tableBody.appendChild(row);
                 });
             });
 
-            // Initialize the DataTable once the table is populated
-            // $(document).ready(function () {
-            //     $('#dataTable').DataTable();
-            // });
 
 
-            var groupColumn = 2;
-
+            // ------------------------------------------------------------
+            const nominalColumn = 6;          // ← numeric column
+            const groupColumn = 2;          // ← grouping column
+            // ------------------------------------------------------------
+            /* 1️⃣  Helper – strip non‑digits, then convert to Number */
+            function toNumber(str) {
+                // Remove everything except digits
+                const num = Number(str.replace(/[^\d]/g, '')); // "5,000,000" → 5000000
+                return isNaN(num) ? 0 : num;                  // guard against NaN
+            }
+            function formatRp(n) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(n);
+            }
+            // ------------------------------------------------------------
             var table = $("#kt_datatable_row_grouping").DataTable({
-                "columnDefs": [{
-                    "visible": false,
-                    "targets": groupColumn
-                }],
-                "order": [
-                    [groupColumn, "asc"]
-                ],
+                "columnDefs": [{ "visible": false, "targets": groupColumn }],
+                "order": [[groupColumn, "asc"]],
                 "displayLength": 100,
                 "drawCallback": function (settings) {
                     var api = this.api();
-                    var rows = api.rows({
-                        page: "current"
-                    }).nodes();
+                    var rows = api.rows({ page: "current" }).nodes();
                     var last = null;
 
-                    api.column(groupColumn, {
-                        page: "current"
-                    }).data().each(function (group, i) {
+                    /* ---- 4a. Sum per group on the current page ---- */
+                    var sums = {};   // { groupName : totalNominal }
+                    api.rows({ page: "current" }).data().each(function (row, i) {
+                        var group = row[groupColumn];
+                        var nominal = toNumber(row[nominalColumn]);   // <-- fixed here
+
+                        sums[group] = (sums[group] || 0) + nominal;
+                    });
+
+                    /* ---- 4b. Insert group header rows ---- */
+                    api.column(groupColumn, { page: "current" }).data().each(function (group, i) {
                         if (last !== group) {
+                            // No formatting – just show the raw number
                             $(rows).eq(i).before(
-                                "<tr class=\"group fs-5 fw-bolder\"><td colspan=\"6\">" + group + "</td></tr>"
+                                `<tr class="group fs-5 fw-bolder">
+                                                                                                                                <td colspan="4">${group}</td>
+                                                                                                                                <td colspan="2" class="text-end">${formatRp(sums[group])}</td>
+                                                                                                                             </tr>`
                             );
                             last = group;
                         }
                     });
+
+                    /* ---- 3. Remove any previously added Total row ---- */
+                    $('.total-row').remove();
+
+                    /* ---- 4. Compute the grand total (across all rows) ---- */
+                    var overallSum = api.column(nominalColumn, { page: "all" })
+                        .data()
+                        .reduce(function (a, b) {
+                            return a + toNumber(b);
+                        }, 0);
+
+                    /* ---- 5. Append the Total row at the very end ---- */
+                    var totalRow = `<tr class="group fs-5 fw-bolder total-row">
+                                                                                                                                <td colspan="4">Grand Total</td>
+                                                                                                                                <td colspan="2" class="text-end">${formatRp(overallSum)}</td>
+                                                                                                                            </tr>`;
+                    $('#kt_datatable_row_grouping tbody').append(totalRow);
                 }
             });
 
@@ -221,6 +240,28 @@
                 } else {
                     table.order([groupColumn, "asc"]).draw();
                 }
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const btnCetak = document.getElementById('cetakPDF');
+                const areaToPrint = document.getElementById('cetakArea');
+
+                if (!btnCetak || !areaToPrint) return; // safety
+
+                btnCetak.addEventListener('click', function () {
+                    const opt = {
+                        margin: 1,
+                        filename: 'cetakArea.pdf',
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2, useCORS: true },
+                        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                    };
+
+                    // html2pdf will capture the element, render it to a canvas, then
+                    // convert the canvas into a PDF that is automatically downloaded.
+                    html2pdf().set(opt).from(areaToPrint).save();
+                });
             });
         </script>
     @endsection

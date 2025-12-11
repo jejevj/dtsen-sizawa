@@ -116,6 +116,9 @@ class ReportModel extends Model
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
                     })
+                    ->when(! empty($params['jenis_kelamin']), function ($q) use ($params) {
+                        return $q->where('jenis_kelamin', $params['jenis_kelamin']);
+                    })
                     ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
                         if ($params['dokumen_ktp'] == 1) {
                             return $q->whereNotNull('ktp_berkas');
@@ -276,6 +279,9 @@ class ReportModel extends Model
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
                     })
+                    ->when(! empty($params['jenis_kelamin']), function ($q) use ($params) {
+                        return $q->where('jenis_kelamin', $params['jenis_kelamin']);
+                    })
                     ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
                         if ($params['dokumen_ktp'] == 1) {
                             return $q->whereNotNull('ktp_berkas');
@@ -431,6 +437,9 @@ class ReportModel extends Model
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    ->when(! empty($params['jenis_kelamin']), function ($q) use ($params) {
+                        return $q->where('jenis_kelamin', $params['jenis_kelamin']);
                     })
                     ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
                         if ($params['dokumen_ktp'] == 1) {
@@ -592,6 +601,9 @@ class ReportModel extends Model
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    ->when(! empty($params['jenis_kelamin']), function ($q) use ($params) {
+                        return $q->where('jenis_kelamin', $params['jenis_kelamin']);
                     })
                     ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
                         if ($params['dokumen_ktp'] == 1) {
@@ -760,6 +772,9 @@ class ReportModel extends Model
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    ->when(! empty($params['jenis_kelamin']), function ($q) use ($params) {
+                        return $q->where('jenis_kelamin', $params['jenis_kelamin']);
                     })
                     ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
                         if ($params['dokumen_ktp'] == 1) {
@@ -931,6 +946,9 @@ class ReportModel extends Model
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    ->when(! empty($params['jenis_kelamin']), function ($q) use ($params) {
+                        return $q->where('jenis_kelamin', $params['jenis_kelamin']);
                     })
                     ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
                         if ($params['dokumen_ktp'] == 1) {
@@ -1117,6 +1135,10 @@ class ReportModel extends Model
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    
+                    ->when(! empty($params['jenis_kelamin']), function ($q) use ($params) {
+                        return $q->where('jenis_kelamin', $params['jenis_kelamin']);
                     })
                     ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
                         if ($params['dokumen_ktp'] == 1) {
