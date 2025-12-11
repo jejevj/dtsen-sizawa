@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HomeModel;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,7 +13,12 @@ class HomeController extends Controller
     public function index()
     {
         //
-        return view('home'); // This will render home.blade.php
+        $agregatPenerimaan = HomeModel::getAgregatPenerimaan();
+        // dump($agregatPenerimaan);
+        $data = [
+            'penerimaan_provinsi'=>$agregatPenerimaan
+        ];
+        return view('home', compact('data')); // This will render home.blade.php
     }
 
     /**

@@ -373,7 +373,7 @@
             var basePath = "assets/geojson/";
             var provinces = [
                 "Aceh", "Bali", "Bangka Belitung", "Banten", "Bengkulu", "Gorontalo",
-                "Jakarta", "Jambi", "Jawa Barat", "Jawa Tengah", "Jawa Timur",
+                "DKI Jakarta", "Jambi", "Jawa Barat", "Jawa Tengah", "Jawa Timur",
                 "Kalimantan Barat", "Kalimantan Selatan", "Kalimantan Tengah", "Kalimantan Timur", "Kalimantan Utara",
                 "Kepulauan Riau", "Lampung", "Maluku", "Maluku Utara", "Nusa Tenggara Barat", "Nusa Tenggara Timur",
                 "Papua", "Papua Barat", "Riau", "Sulawesi Barat", "Sulawesi Selatan", "Sulawesi Tengah",
@@ -407,31 +407,72 @@
             }
 
             // Load Indonesia provinces
+            function formatRp(n) {
+                // Indonesian currency – no decimals, thousands separated by '.'
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(n);
+            }
+
+            /*  ----------  main routine  ---------- */
             function loadIndonesia() {
+                // 1️⃣  Map PHP array → JavaScript lookup array
+                var provData = @json($data['penerimaan_provinsi']);
+
+                // 2️⃣  Clear any old province layers
                 mainLayer.clearLayers();
+
                 provinces.forEach(function (province) {
-                    $.getJSON(basePath + province + "/Provinsi/" + province + ".geojson", function (data) {
-                        var geo = L.geoJson(data, {
+                    // Find the province’s aggregate record
+                    var provInfo = provData.find(function (d) {
+                        return d.provinsi_nama === province;
+                    });
+
+                    // Guard: if nothing found, skip (or show “Tidak Ada Data”)
+                    var tooltipText = 'Tidak Ada Data';
+                    if (provInfo) {
+                        if (provInfo.total_nominal_numeric !== 0) {
+                            tooltipText = formatRp(provInfo.total_nominal_numeric);
+                        } else {
+                            tooltipText = provInfo.total_nominal_text;   // usually “Tidak Ada Data”
+                        }
+                    }
+
+                    // 3️⃣  Load the geojson for the province
+                    $.getJSON(basePath + province + "/Provinsi/" + province + ".geojson", function (geojson) {
+                        var geo = L.geoJson(geojson, {
                             style: style,
                             onEachFeature: function (feature, layer) {
-                                layer.bindTooltip(province + "<br>Total Penerima Bantuan<br>Total Penerima Manfaat", { sticky: true });
+                                // Bind a tooltip that contains the province name & the formatted total
+                                layer.bindTooltip(
+                                    province + "<br>Total Penerimaan: " + tooltipText,
+                                    { sticky: true }
+                                );
+
+                                // Event handlers
                                 layer.on({
                                     mouseover: highlight,
                                     mouseout: resetHighlight,
                                     click: function () {
-                                        // Zoom to province bounds first
+                                        // 1️⃣ Zoom to province bounds
                                         map.fitBounds(layer.getBounds());
-                                        // Then show cities after a short delay
+
+                                        // 2️⃣ After zoom, show city details
                                         setTimeout(function () {
                                             showProvinceDetail(province);
-                                        }, 300); // delay ensures zoom finishes
+                                        }, 300);   // 300 ms delay – zoom finished
                                     }
                                 });
                             }
                         });
-                        geo.addTo(mainLayer);
+
+                        geo.addTo(mainLayer);   // Add this province’s layer to the main group
                     });
                 });
+
+                // 4️⃣  Add the group to the map (if it isn’t already)
                 mainLayer.addTo(map);
             }
 

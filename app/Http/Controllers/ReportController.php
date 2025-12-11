@@ -97,12 +97,13 @@ class ReportController extends Controller
                     $genderData = ReportModel::getDataByGenderWithFilter($params);
                     $penyaluranData = ReportModel::getPenyaluranByGenderWithFilter($params);
                     $programData = ReportModel::getPenyaluranByProgramWithFilter($params);
-                    $bidangData = ReportModel::getPenyaluranByBidangWithFilter($params);
+                    $bidangData2 = ReportModel::getPenyaluranByBidangWithFilter($params);
                     $timeSeriesData = ReportModel::getTimeSeriesDataWithFilter($params);
                     $tabulateData = ReportModel::getTabulateDataWithFilter($params);
                     // dd($genderData);
                     // dd($timeSeriesData);
 
+                    // dd($bidangData2);
                     // Update data array with filtered values
                     $data = [
                         'penerima_manfaat' => $summaryData->penerima_manfaat ?? 0, // Default to 0 if null
@@ -114,7 +115,7 @@ class ReportController extends Controller
                         'female_total_penyaluran' => $penyaluranData->female_total_penyaluran ?? 0,
                         'tidak_langsung_total' => $programData->tidak_langsung_total ?? 0,
                         'langsung_total' => $programData->langsung_total ?? 0,
-                        'bidangData' => $bidangData,
+                        'bidangData' => $bidangData2,
                         'timeSeriesData' => $timeSeriesData,
                         'provinsiList' => $provinsiList,  // Ensure it's always set here
                         'agamaList' => $agamaList,  // Ensure it's always set here

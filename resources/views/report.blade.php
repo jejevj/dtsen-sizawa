@@ -384,7 +384,7 @@
                                                     <select class="form-select" data-control="select2"
                                                         data-placeholder="-- Dokumen KTP --" name="dokumen_ktp"
                                                         id="dokumen_ktp">
-                                                        <option disabled>Status KTP</option>
+                                                        <option value="" selected>Status KTP</option>
                                                         <option value="1">Tersedia</option>
                                                         <option value="2">Tidak Tersedia</option>
                                                     </select>
@@ -392,7 +392,7 @@
                                                 <div class="fs-6 ms-1 mb-5">
                                                     <select class="form-select" data-control="select2"
                                                         data-placeholder="-- Agama --" name="agama" id="agama">
-                                                        <option disabled>Pilih Agama</option>
+                                                        <option value="" selected>Pilih Agama</option>
                                                         @foreach($data['agamaList'] as $p)
                                                             <option value="{{ $p->id }}">{{ $p->name }}</option>
                                                         @endforeach
@@ -402,7 +402,7 @@
                                                     <select class="form-select" data-control="select2"
                                                         data-placeholder="-- Jenis Kelamin --" name="jenis_kelamin"
                                                         id="jenis_kelamin">
-                                                        <option disabled>Jenis Kelamin</option>
+                                                        <option value="" disabled selected>Jenis Kelamin</option>
                                                         <option value="M">Laki - Laki</option>
                                                         <option value="F">Perempuan</option>
                                                     </select>

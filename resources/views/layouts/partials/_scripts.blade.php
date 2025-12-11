@@ -15,6 +15,8 @@
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 <script src="assets/js/leaflet.js"></script>
 <script src="assets/plugins/global/plugins.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
 
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
