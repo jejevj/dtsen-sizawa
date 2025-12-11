@@ -37,7 +37,7 @@ class ReportModel extends Model
                     })
                     // ->dumpRawSql();
                     ->first();
-                    // -
+                // -
             } catch (\Exception $e) {
                 Log::error('Error fetching report summary: '.$e->getMessage());
 
@@ -105,7 +105,7 @@ class ReportModel extends Model
 
                 $query = self::selectRaw('COUNT(DISTINCT nik) AS penerima_manfaat, SUM(rupiah) AS penyaluran')
                     ->when(! empty($params['nik']), function ($q) use ($params) {
-                        return $q->where('nik', $params['nik']);
+                        return $q->where('nik', (int) $params['nik']);
                     })
                     ->when(! empty($params['nama']), function ($q) use ($params) {
                         return $q->where('nama_lengkap', $params['nama']);
@@ -115,10 +115,12 @@ class ReportModel extends Model
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
+                        if ($params['dokumen_ktp'] == 1) {
+                            return $q->whereNotNull('ktp_berkas');
+                        }
                     });
-                if ($params['dokumen_ktp'] == 1) {
-                    $query->whereNotNull('ktp_berkas');
-                }
 
                 return $query->first();
             } catch (\Exception $e) {
@@ -263,7 +265,7 @@ class ReportModel extends Model
             COUNT(DISTINCT nik) AS total
         ')
                     ->when(! empty($params['nik']), function ($q) use ($params) {
-                        return $q->where('nik', $params['nik']);
+                        return $q->where('nik', (int) $params['nik']);
                     })
                     ->when(! empty($params['nama']), function ($q) use ($params) {
                         return $q->where('nama_lengkap', $params['nama']);
@@ -273,11 +275,12 @@ class ReportModel extends Model
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
+                        if ($params['dokumen_ktp'] == 1) {
+                            return $q->whereNotNull('ktp_berkas');
+                        }
                     });
-
-                if ($params['dokumen_ktp'] == 1) {
-                    $query->whereNotNull('ktp_berkas');
-                }
 
                 // $query->ddRawSql();
                 // ->first();
@@ -418,7 +421,7 @@ class ReportModel extends Model
                 SUM(CASE WHEN jenis_kelamin = "f" THEN rupiah ELSE 0 END) AS female_total_penyaluran
             ')
                     ->when(! empty($params['nik']), function ($q) use ($params) {
-                        return $q->where('nik', $params['nik']);
+                        return $q->where('nik', (int) $params['nik']);
                     })
                     ->when(! empty($params['nama']), function ($q) use ($params) {
                         return $q->where('nama_lengkap', $params['nama']);
@@ -428,11 +431,12 @@ class ReportModel extends Model
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
+                        if ($params['dokumen_ktp'] == 1) {
+                            return $q->whereNotNull('ktp_berkas');
+                        }
                     });
-
-                if ($params['dokumen_ktp'] == 1) {
-                    $query->whereNotNull('ktp_berkas');
-                }
 
                 // $query->ddRawSql();
                 // ->first();
@@ -578,7 +582,7 @@ class ReportModel extends Model
                         DB::raw("SUM(CASE WHEN tipe_penerimaan= 'pmtl' THEN rupiah ELSE 0 END) AS tidak_langsung_total")
                     )
                     ->when(! empty($params['nik']), function ($q) use ($params) {
-                        return $q->where('nik', $params['nik']);
+                        return $q->where('nik', (int) $params['nik']);
                     })
                     ->when(! empty($params['nama']), function ($q) use ($params) {
                         return $q->where('nama_lengkap', $params['nama']);
@@ -588,11 +592,12 @@ class ReportModel extends Model
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
+                        if ($params['dokumen_ktp'] == 1) {
+                            return $q->whereNotNull('ktp_berkas');
+                        }
                     });
-
-                if ($params['dokumen_ktp'] == 1) {
-                    $query->whereNotNull('ktp_berkas');
-                }
 
                 // $query->ddRawSql();
                 // ->first();
@@ -665,7 +670,7 @@ class ReportModel extends Model
                     })
                     ->groupBy('mb.bidang_label');
 
-                   return $query->get(); 
+                return $query->get();
             } catch (\Exception $e) {
                 // Log the exception and return a custom error message or null
                 \Log::error('Error fetching penyaluran data by bidang: '.$e->getMessage());
@@ -744,25 +749,23 @@ class ReportModel extends Model
                     ->leftJoin('t_program as t', 'a.program_kode', '=', 't.program_kode')
                     ->leftJoin('m_bidang as mb', 't.bidang_kode', '=', 'mb.bidang_kode')
                     ->groupBy('mb.bidang_label')
-                    ->when(! empty($params['provinsi_domisili']), function ($q) use ($params) {
-                        return $q->where('a.provinsi_kode', $params['provinsi_domisili']);
+                    ->when(! empty($params['nik']), function ($q) use ($params) {
+                        return $q->where('nik', (int) $params['nik']);
                     })
-                    ->when(! empty($params['kabkota_domisili']), function ($q) use ($params) {
-                        return $q->where('a.kabkota_kode', $params['kabkota_domisili']);
+                    ->when(! empty($params['nama']), function ($q) use ($params) {
+                        return $q->where('nama_lengkap', $params['nama']);
                     })
-                    ->when(! empty($params['kecamatan_domisili']), function ($q) use ($params) {
-                        return $q->where('a.kecamatan_kode', $params['kecamatan_domisili']);
+                    ->when(! empty($params['agama']), function ($q) use ($params) {
+                        return $q->where('agama', $params['agama']);
                     })
-                    ->when(! empty($params['kelurahan_domisili']), function ($q) use ($params) {
-                        return $q->where('a.kelurahan_kode', $params['kelurahan_domisili']);
+                    ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
+                        return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
                     })
-                    ->when(! empty($params['alamat_domisili']), function ($q) use ($params) {
-                        return $q->where('a.alamat_domisili', 'LIKE', '%'.$params['alamat_domisili'].'%');
+                    ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
+                        if ($params['dokumen_ktp'] == 1) {
+                            return $q->whereNotNull('ktp_berkas');
+                        }
                     });
-
-                if ($params['dokumen_ktp'] == 1) {
-                    $query->whereNotNull('a.ktp_berkas');
-                }
 
                 return $query->get(); // Use get() to return all results
             } catch (\Exception $e) {
@@ -823,7 +826,7 @@ class ReportModel extends Model
                         DB::raw('COALESCE(SUM(CASE WHEN a.tipe_penerimaan = "pmtl" THEN a.rupiah ELSE 0 END), 0) AS Bantuan_Tidak_Langsung')
                     )
                     ->leftJoin('t_program as p', 'a.program_kode', '=', 'p.program_kode')
-                     ->leftJoin('t_laz', 'a.laz_kode', '=', 't_laz.laz_kode')
+                    ->leftJoin('t_laz', 'a.laz_kode', '=', 't_laz.laz_kode')
                     ->when(! empty($params['skala']), function ($q) use ($params) {
                         return $q->where('t_laz.skala', $params['skala']);
                     })
@@ -918,22 +921,24 @@ class ReportModel extends Model
                     )
                     ->leftJoin('t_program as p', 'a.program_kode', '=', 'p.program_kode')
                     ->when(! empty($params['nik']), function ($q) use ($params) {
-                        return $q->where('a.nik', $params['nik']);
+                        return $q->where('nik', (int) $params['nik']);
                     })
                     ->when(! empty($params['nama']), function ($q) use ($params) {
-                        return $q->where('a.nama_lengkap', $params['nama']);
+                        return $q->where('nama_lengkap', $params['nama']);
                     })
                     ->when(! empty($params['agama']), function ($q) use ($params) {
-                        return $q->where('a.agama', $params['agama']);
+                        return $q->where('agama', $params['agama']);
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
-                        return $q->whereBetween('a.lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                        return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
+                        if ($params['dokumen_ktp'] == 1) {
+                            return $q->whereNotNull('ktp_berkas');
+                        }
                     })
                     ->groupBy(DB::raw('YEAR(a.created_at)'))
                     ->orderBy('tahun');
-                if ($params['dokumen_ktp'] == 1) {
-                    $query->whereNotNull('a.ktp_berkas');
-                }
 
                 return $query->get();
             } catch (\Exception $e) {
@@ -996,7 +1001,7 @@ class ReportModel extends Model
                         DB::raw('MAX(ktp_alamat) as alamat_ktp'),
                         DB::raw('SUM(rupiah) as nominal')
                     )
-                     ->leftJoin('t_laz', 't_mustahik.laz_kode', '=', 't_laz.laz_kode')
+                    ->leftJoin('t_laz', 't_mustahik.laz_kode', '=', 't_laz.laz_kode')
                     ->when(! empty($params['skala']), function ($q) use ($params) {
                         return $q->where('t_laz.skala', $params['skala']);
                     })
@@ -1102,7 +1107,7 @@ class ReportModel extends Model
 
                     )
                     ->when(! empty($params['nik']), function ($q) use ($params) {
-                        return $q->where('nik', $params['nik']);
+                        return $q->where('nik', (int) $params['nik']);
                     })
                     ->when(! empty($params['nama']), function ($q) use ($params) {
                         return $q->where('nama_lengkap', $params['nama']);
@@ -1112,11 +1117,13 @@ class ReportModel extends Model
                     })
                     ->when(! empty($params['tgl_lahir_start']), function ($q) use ($params) {
                         return $q->whereBetween('lahir_tanggal', [$params['tgl_lahir_start'], $params['tgl_lahir_end']]);
+                    })
+                    ->when(! empty($params['dokumen_ktp']), function ($q) use ($params) {
+                        if ($params['dokumen_ktp'] == 1) {
+                            return $q->whereNotNull('ktp_berkas');
+                        }
                     });
 
-                if ($params['dokumen_ktp'] == 1) {
-                    $query->whereNotNull('ktp_berkas');
-                }
                 // $query->ddRawSql();
 
                 $result = $query->groupBy('nik')->get();
