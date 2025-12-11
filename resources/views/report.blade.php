@@ -402,7 +402,7 @@
                                                     <select class="form-select" data-control="select2"
                                                         data-placeholder="-- Jenis Kelamin --" name="jenis_kelamin"
                                                         id="jenis_kelamin">
-                                                        <option value="" disabled selected>Jenis Kelamin</option>
+                                                        <option value=""  selected>Jenis Kelamin</option>
                                                         <option value="M">Laki - Laki</option>
                                                         <option value="F">Perempuan</option>
                                                     </select>
