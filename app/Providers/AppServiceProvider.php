@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
         
-        // URL::forceScheme('https'); //Production
+        URL::forceScheme('https'); //Production
 
         // Modify the Content Security Po
         // licy header globally
